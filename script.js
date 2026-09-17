@@ -195,4 +195,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 5. Stacked Sneak Peek Card Switcher & Auto-Rotate
+  const peekTabBtns = document.querySelectorAll('.peek-tab-btn');
+  const stackedCards = document.querySelectorAll('.stacked-peek-card');
+  const peekCardStack = document.getElementById('peekCardStack');
+  let activeCardIndex = 0;
+  let peekAutoTimer = null;
+
+  function switchPeekCard(index) {
+    activeCardIndex = index;
+    peekTabBtns.forEach((btn, idx) => {
+      btn.classList.toggle('active', idx === index);
+    });
+    stackedCards.forEach((card, idx) => {
+      card.classList.toggle('active', idx === index);
+    });
+  }
+
+  function startPeekAutoRotate() {
+    stopPeekAutoRotate();
+    if (stackedCards.length > 1) {
+      peekAutoTimer = setInterval(() => {
+        activeCardIndex = (activeCardIndex + 1) % stackedCards.length;
+        switchPeekCard(activeCardIndex);
+      }, 4500);
+    }
+  }
+
+  function stopPeekAutoRotate() {
+    if (peekAutoTimer) clearInterval(peekAutoTimer);
+  }
+
+  peekTabBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const index = parseInt(btn.getAttribute('data-index'), 10);
+      switchPeekCard(index);
+      startPeekAutoRotate();
+    });
+  });
+
+  if (peekCardStack) {
+    peekCardStack.addEventListener('mouseenter', stopPeekAutoRotate);
+    peekCardStack.addEventListener('mouseleave', startPeekAutoRotate);
+    startPeekAutoRotate();
+  }
+
 });

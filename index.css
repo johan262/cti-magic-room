@@ -498,48 +498,93 @@ a {
   color: var(--color-red);
 }
 
-/* Sneak Peek Section: Inside The Community */
+/* Sneak Peek Section: Inside The Community (Stacked Card Switcher) */
 .sneak-peek-section {
   padding: 60px 0 80px;
   position: relative;
   z-index: 2;
 }
 
-.sneak-peek-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-}
-
-.peek-card {
-  background: #ffffff;
-  border: 1.5px solid var(--color-border-amber);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
+.sneak-peek-stack-container {
+  max-width: 900px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  align-items: center;
 }
 
-.peek-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+.sneak-peek-nav {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 6px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-border-amber);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(8px);
 }
 
-.browser-frame {
-  background: #f8f5ed;
-  border-bottom: 1.5px solid rgba(122, 26, 25, 0.12);
+.peek-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-crimson);
+  padding: 8px 20px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.peek-tab-btn.active, .peek-tab-btn:hover {
+  background: var(--color-red);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(230, 59, 46, 0.3);
+}
+
+.peek-card-stack {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+}
+
+.stacked-peek-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(24px) scale(0.96);
+  pointer-events: none;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+.stacked-peek-card.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  z-index: 2;
+}
+
+/* White Box Frame (Matching user reference image) */
+.white-box-frame {
+  background: #ffffff;
+  border: 4px solid #ffffff;
+  border-radius: 28px;
   overflow: hidden;
+  box-shadow: 0 20px 45px rgba(122, 26, 25, 0.14);
+  margin-bottom: 20px;
 }
 
 .browser-header {
-  padding: 10px 16px;
+  padding: 10px 18px;
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(122, 26, 25, 0.05);
-  border-bottom: 1px solid rgba(122, 26, 25, 0.08);
+  background: #fdfaf3;
+  border-bottom: 1px solid rgba(122, 26, 25, 0.1);
 }
 
 .browser-header .dot {
@@ -568,11 +613,16 @@ a {
   object-fit: cover;
 }
 
-.peek-body {
-  padding: 24px 28px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+.stacked-peek-caption {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid var(--color-border-amber);
+  border-radius: var(--radius-md);
+  padding: 22px 28px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  max-width: 780px;
+  margin: 0 auto;
 }
 
 .peek-tag {
@@ -581,6 +631,7 @@ a {
   color: var(--color-red);
   letter-spacing: 0.08em;
   margin-bottom: 6px;
+  display: block;
 }
 
 .peek-title {
@@ -588,19 +639,13 @@ a {
   font-size: 1.4rem;
   font-weight: 800;
   color: var(--color-crimson);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .peek-text {
   font-size: 0.95rem;
   color: var(--color-dark);
   line-height: 1.5;
-}
-
-@media (max-width: 900px) {
-  .sneak-peek-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* Pillars Section - Redesigned Standout Card Showcase */
