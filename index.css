@@ -832,7 +832,8 @@ a {
   font-size: 1.1rem;
   color: var(--color-muted);
   max-width: 620px;
-  margin: 12px auto 0;
+  margin: 12px 0 0;
+  text-align: left;
 }
 
 .apply-form {
