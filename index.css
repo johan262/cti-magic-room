@@ -900,6 +900,36 @@ a {
 .phone-num-input {
   flex-grow: 1;
   padding-left: 34px;
+  padding-right: 150px;
+}
+
+.phone-country-badge {
+  position: absolute;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fdfaf3;
+  border: 1px solid rgba(122, 26, 25, 0.15);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-crimson);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.phone-country-badge.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.phone-country-badge .flag {
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 .form-hint {

@@ -88,11 +88,63 @@ document.addEventListener('DOMContentLoaded', () => {
   const phoneNumInput = document.getElementById('phoneNumber');
   const countryCodeSelect = document.getElementById('countryCodeSelect');
 
-  // Phone number input formatter
+  // Phone number input formatter + country code detection
+  const COUNTRY_CODES = {
+    '971': ['🇦🇪', 'UAE'], '966': ['🇸🇦', 'Saudi Arabia'], '974': ['🇶🇦', 'Qatar'],
+    '965': ['🇰🇼', 'Kuwait'], '973': ['🇧🇭', 'Bahrain'], '968': ['🇴🇲', 'Oman'],
+    '962': ['🇯🇴', 'Jordan'], '961': ['🇱🇧', 'Lebanon'], '20': ['🇪🇬', 'Egypt'],
+    '212': ['🇲🇦', 'Morocco'], '216': ['🇹🇳', 'Tunisia'], '213': ['🇩🇿', 'Algeria'],
+    '964': ['🇮🇶', 'Iraq'], '963': ['🇸🇾', 'Syria'], '970': ['🇵🇸', 'Palestine'],
+    '967': ['🇾🇪', 'Yemen'], '98': ['🇮🇷', 'Iran'], '90': ['🇹🇷', 'Türkiye'],
+    '44': ['🇬🇧', 'UK'], '1': ['🇺🇸', 'USA / Canada'], '91': ['🇮🇳', 'India'],
+    '92': ['🇵🇰', 'Pakistan'], '880': ['🇧🇩', 'Bangladesh'], '94': ['🇱🇰', 'Sri Lanka'],
+    '977': ['🇳🇵', 'Nepal'], '63': ['🇵🇭', 'Philippines'], '62': ['🇮🇩', 'Indonesia'],
+    '60': ['🇲🇾', 'Malaysia'], '65': ['🇸🇬', 'Singapore'], '66': ['🇹🇭', 'Thailand'],
+    '84': ['🇻🇳', 'Vietnam'], '86': ['🇨🇳', 'China'], '852': ['🇭🇰', 'Hong Kong'],
+    '81': ['🇯🇵', 'Japan'], '82': ['🇰🇷', 'South Korea'], '61': ['🇦🇺', 'Australia'],
+    '64': ['🇳🇿', 'New Zealand'], '27': ['🇿🇦', 'South Africa'], '234': ['🇳🇬', 'Nigeria'],
+    '254': ['🇰🇪', 'Kenya'], '251': ['🇪🇹', 'Ethiopia'], '49': ['🇩🇪', 'Germany'],
+    '33': ['🇫🇷', 'France'], '39': ['🇮🇹', 'Italy'], '34': ['🇪🇸', 'Spain'],
+    '351': ['🇵🇹', 'Portugal'], '31': ['🇳🇱', 'Netherlands'], '32': ['🇧🇪', 'Belgium'],
+    '41': ['🇨🇭', 'Switzerland'], '43': ['🇦🇹', 'Austria'], '46': ['🇸🇪', 'Sweden'],
+    '47': ['🇳🇴', 'Norway'], '45': ['🇩🇰', 'Denmark'], '358': ['🇫🇮', 'Finland'],
+    '353': ['🇮🇪', 'Ireland'], '48': ['🇵🇱', 'Poland'], '30': ['🇬🇷', 'Greece'],
+    '7': ['🇷🇺', 'Russia / Kazakhstan'], '380': ['🇺🇦', 'Ukraine'], '55': ['🇧🇷', 'Brazil'],
+    '52': ['🇲🇽', 'Mexico'], '54': ['🇦🇷', 'Argentina'], '57': ['🇨🇴', 'Colombia'],
+    '56': ['🇨🇱', 'Chile']
+  };
+  const phoneCountryBadge = document.getElementById('phoneCountryBadge');
+  const detectedCountryInput = document.getElementById('detectedCountry');
+
+  function detectCountry(digits) {
+    for (let len = 3; len >= 1; len--) {
+      const code = digits.slice(0, len);
+      if (digits.length >= len && COUNTRY_CODES[code]) return { code, info: COUNTRY_CODES[code] };
+    }
+    return null;
+  }
+
+  function updateCountryBadge() {
+    if (!phoneCountryBadge || !phoneNumInput) return;
+    const digits = phoneNumInput.value.replace(/\D/g, '');
+    const match = detectCountry(digits);
+    if (match) {
+      const [flag, name] = match.info;
+      phoneCountryBadge.innerHTML = `<span class="flag">${flag}</span><span>${name}</span>`;
+      phoneCountryBadge.classList.add('visible');
+      if (detectedCountryInput) detectedCountryInput.value = `${name} (+${match.code})`;
+    } else {
+      phoneCountryBadge.classList.remove('visible');
+      phoneCountryBadge.innerHTML = '';
+      if (detectedCountryInput) detectedCountryInput.value = '';
+    }
+  }
+
   if (phoneNumInput) {
     phoneNumInput.addEventListener('input', (e) => {
       let val = e.target.value.replace(/[^\d\s]/g, '');
       e.target.value = val;
+      updateCountryBadge();
     });
   }
 
@@ -147,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetAppFormBtn.addEventListener('click', () => {
       if (magicApplyForm) {
         magicApplyForm.reset();
+        updateCountryBadge();
         magicApplyForm.style.display = 'flex';
       }
       if (applySuccessState) {

@@ -247,6 +247,8 @@
               <div class="phone-input-wrap">
                 <span class="phone-plus-prefix">+</span>
                 <input type="tel" inputmode="numeric" id="phoneNumber" name="phone_number" class="form-control phone-num-input" placeholder="971 50 624 8875" pattern="[0-9 ]{7,20}" required>
+                <span class="phone-country-badge" id="phoneCountryBadge" aria-live="polite"></span>
+                <input type="hidden" name="detected_country" id="detectedCountry">
               </div>
               <span class="form-hint" id="phoneFormatHint">Include your country code (e.g. +971 50 624 8875).</span>
             </div>
