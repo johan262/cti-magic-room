@@ -186,6 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (successNameDisplay) successNameDisplay.textContent = fullName;
       if (successEmailDisplay) successEmailDisplay.textContent = emailAddr;
+      buildInboxButtons(emailAddr);
+      startEmailCountdown();
 
       magicApplyForm.style.display = 'none';
       if (applySuccessState) {
@@ -195,8 +197,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Success-state helpers: inbox shortcuts + 60s countdown
+  const emailCountdown = document.getElementById('emailCountdown');
+  const spamCallout = document.getElementById('spamCallout');
+  const spamCalloutTitle = document.getElementById('spamCalloutTitle');
+  const spamActions = document.getElementById('spamActions');
+  let countdownTimer = null;
+
+  function buildInboxButtons(email) {
+    if (!spamActions) return;
+    const domain = (email.split('@')[1] || '').toLowerCase();
+    const q = encodeURIComponent('"Magic Room"');
+    let links = [];
+    if (/^(gmail|googlemail)\./.test(domain)) {
+      links = [
+        ['Open Gmail Promotions', 'https://mail.google.com/mail/u/0/#category/promotions'],
+        ['Open Gmail Spam', 'https://mail.google.com/mail/u/0/#spam'],
+        ['Search all mail', `https://mail.google.com/mail/u/0/#search/in%3Aanywhere+${q}`]
+      ];
+    } else if (/^(outlook|hotmail|live|msn)\./.test(domain)) {
+      links = [
+        ['Open Outlook Inbox', 'https://outlook.live.com/mail/0/inbox'],
+        ['Open Junk Email', 'https://outlook.live.com/mail/0/junkemail']
+      ];
+    } else if (/^(yahoo|ymail)\./.test(domain)) {
+      links = [['Open Yahoo Mail', 'https://mail.yahoo.com/']];
+    } else if (/^(icloud|me|mac)\./.test(domain)) {
+      links = [['Open iCloud Mail', 'https://www.icloud.com/mail']];
+    }
+    spamActions.innerHTML = links.map(([label, url], i) =>
+      `<a href="${url}" target="_blank" rel="noopener" class="spam-action-btn${i ? ' ghost' : ''}">${label} ↗</a>`
+    ).join('');
+  }
+
+  function startEmailCountdown() {
+    if (!emailCountdown) return;
+    clearInterval(countdownTimer);
+    if (spamCallout) spamCallout.classList.remove('urgent');
+    if (spamCalloutTitle) spamCalloutTitle.textContent = 'Not in your inbox? Check your Promotions & Spam folders';
+    let remaining = 60;
+    emailCountdown.textContent = `⏳ Expected in about ${remaining}s…`;
+    countdownTimer = setInterval(() => {
+      remaining--;
+      if (remaining > 0) {
+        emailCountdown.textContent = `⏳ Expected in about ${remaining}s…`;
+      } else {
+        clearInterval(countdownTimer);
+        emailCountdown.textContent = '✉️ Your email should have arrived by now.';
+        if (spamCalloutTitle) spamCalloutTitle.textContent = 'Still nothing? Check your Promotions & Spam folders now';
+        if (spamCallout) {
+          spamCallout.classList.add('urgent');
+          spamCallout.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }, 1000);
+  }
+
   if (resetAppFormBtn) {
     resetAppFormBtn.addEventListener('click', () => {
+      clearInterval(countdownTimer);
       if (magicApplyForm) {
         magicApplyForm.reset();
         updateCountryBadge();

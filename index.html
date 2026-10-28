@@ -293,12 +293,28 @@
           <div class="success-steps-box">
             <div class="success-step-item">
               <span class="step-num">1</span>
-              <span>Our team is verifying your registration against our official CTI Dubai records.</span>
+              <span>Your registration is being verified instantly against our official CTI Dubai records.</span>
             </div>
             <div class="success-step-item">
               <span class="step-num">2</span>
-              <span>Check your email for an invite link or a request for more information. If nothing appears in your inbox check your spam.</span>
+              <span>An email with your invite link (or a request for more information) is on its way to <strong id="successEmailDisplay">your email</strong>. It should arrive <strong>within 1 minute</strong>.
+                <span class="email-countdown" id="emailCountdown" aria-live="polite"></span>
+              </span>
             </div>
+          </div>
+
+          <!-- Promotions / Spam Callout -->
+          <div class="spam-callout" id="spamCallout" role="alert">
+            <div class="spam-callout-head">
+              <span class="spam-icon">📬</span>
+              <strong id="spamCalloutTitle">Not in your inbox? Check your Promotions &amp; Spam folders</strong>
+            </div>
+            <ul class="spam-tips">
+              <li><strong>Gmail:</strong> look in the <em>Promotions</em> or <em>Updates</em> tab, then the <em>Spam</em> folder.</li>
+              <li><strong>Outlook / Hotmail:</strong> check the <em>Other</em> tab and the <em>Junk Email</em> folder.</li>
+              <li>Found it there? Mark it as <em>&ldquo;Not spam&rdquo;</em> and move it to your inbox so you never miss a Magic Room event.</li>
+            </ul>
+            <div class="spam-actions" id="spamActions"></div>
           </div>
           <button class="btn btn-secondary mt-4" id="resetAppFormBtn">Submit Another Application</button>
         </div>
@@ -450,7 +466,7 @@
             <span class="faq-icon">▼</span>
           </button>
           <div class="faq-answer">
-            <p>Once you submit your application form above, our CTI Dubai team verifies your details against our official training registration database. Upon verification, your Magic Room Community invitation is emailed to you within 24 hours.</p>
+            <p>Once you submit your application form above, our CTI Dubai team verifies your details against our official training registration database. Verification is immediate, and your Magic Room Community invitation is emailed to you within a minute. If you don't see it, check your Promotions and Spam folders.</p>
           </div>
         </div>
 

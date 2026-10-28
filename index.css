@@ -1648,3 +1648,98 @@ a {
   .manifesto-article { padding: 40px 24px; }
   .principle-block { padding-left: 0; padding-top: 80px; }
 }
+
+/* ==========================================================================
+   SUCCESS STATE: email countdown + Promotions/Spam callout
+   ========================================================================== */
+.email-countdown {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-red);
+}
+
+.spam-callout {
+  max-width: 600px;
+  margin: 24px auto 8px;
+  padding: 22px 24px;
+  text-align: left;
+  background: #fff4f2;
+  border: 2px solid var(--color-red);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px rgba(230, 59, 46, 0.15);
+}
+
+.spam-callout.urgent {
+  animation: spamPulse 1.6s ease-in-out 3;
+}
+
+@keyframes spamPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 8px 24px rgba(230, 59, 46, 0.15); }
+  50% { transform: scale(1.02); box-shadow: 0 0 0 8px rgba(230, 59, 46, 0.18); }
+}
+
+.spam-callout-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--color-crimson);
+  margin-bottom: 10px;
+}
+
+.spam-icon {
+  font-size: 1.5rem;
+}
+
+.spam-tips {
+  list-style: none;
+  display: grid;
+  gap: 6px;
+  font-size: 0.92rem;
+  color: var(--color-dark);
+}
+
+.spam-tips li::before {
+  content: "→ ";
+  color: var(--color-red);
+  font-weight: 700;
+}
+
+.spam-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.spam-actions:empty {
+  display: none;
+}
+
+.spam-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--color-red);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.spam-action-btn:hover {
+  background: var(--color-red-hover);
+  transform: translateY(-1px);
+}
+
+.spam-action-btn.ghost {
+  background: #fff;
+  color: var(--color-crimson);
+  border: 1.5px solid var(--color-crimson);
+}
