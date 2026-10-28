@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Phone number input formatter
   if (phoneNumInput) {
     phoneNumInput.addEventListener('input', (e) => {
-      let val = e.target.value.replace(/[^\d\s-]/g, '');
+      let val = e.target.value.replace(/[^\d\s]/g, '');
       e.target.value = val;
     });
   }

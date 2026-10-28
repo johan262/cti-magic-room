@@ -883,23 +883,23 @@ a {
 
 /* Phone Input Wrap */
 .phone-input-wrap {
+  position: relative;
   display: flex;
-  gap: 8px;
+  align-items: center;
 }
 
-.phone-code-select {
-  padding: 14px 12px;
-  border: 1.5px solid rgba(122, 26, 25, 0.2);
-  border-radius: var(--radius-sm);
-  font-size: 0.95rem;
-  font-weight: 600;
-  background: #fdfaf3;
+.phone-plus-prefix {
+  position: absolute;
+  left: 18px;
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--color-crimson);
-  cursor: pointer;
+  pointer-events: none;
 }
 
 .phone-num-input {
   flex-grow: 1;
+  padding-left: 34px;
 }
 
 .form-hint {

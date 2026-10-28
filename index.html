@@ -245,20 +245,10 @@
             <div class="form-group">
               <label for="phoneNumber" class="form-label">Phone Number <span class="required-star">*</span></label>
               <div class="phone-input-wrap">
-                <select id="countryCodeSelect" name="country_code" class="phone-code-select">
-                  <option value="+971" selected>🇦🇪 +971 (UAE)</option>
-                  <option value="+966">🇸🇦 +966 (KSA)</option>
-                  <option value="+974">🇶🇦 +974 (Qatar)</option>
-                  <option value="+965">🇰🇼 +965 (Kuwait)</option>
-                  <option value="+973">🇧🇭 +973 (Bahrain)</option>
-                  <option value="+968">🇴🇲 +968 (Oman)</option>
-                  <option value="+44">🇬🇧 +44 (UK)</option>
-                  <option value="+1">🇺🇸 +1 (USA)</option>
-                  <option value="+other">🌐 Other (+)</option>
-                </select>
-                <input type="tel" id="phoneNumber" name="phone_number" class="form-control phone-num-input" placeholder="50 123 4567" required>
+                <span class="phone-plus-prefix">+</span>
+                <input type="tel" inputmode="numeric" id="phoneNumber" name="phone_number" class="form-control phone-num-input" placeholder="971 50 624 8875" pattern="[0-9 ]{7,20}" required>
               </div>
-              <span class="form-hint" id="phoneFormatHint">Must be formatted properly with country code (e.g. +971 50 123 4567).</span>
+              <span class="form-hint" id="phoneFormatHint">Include your country code (e.g. +971 50 624 8875).</span>
             </div>
           </div>
 
